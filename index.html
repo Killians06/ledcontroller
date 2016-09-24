@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="styles/bootstrap.css">
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<title>LEDs Controller</title>
+
+		<script type="text/javascript"> // Définition des Variables boolean pour les Toggle
+			var stateLED13 = false; // = OFF
+			var stateLED12 = false;
+			var stateLED11 = false;
+			var stateLED10 = false;
+
+			function httpGet( theUrl ){
+				var xmlHttp = null;
+				xmlHttp = new XMLHttpRequest();
+				xmlHttp.open( 'GET', theUrl, false );
+				xmlHttp.send( null );
+				return xmlHttp.responseText;
+			}
+		</script>
+
+
+	</head>
+	<body>
+	<div class="panel-heading">
+		<div class="panel-footer"><h3>La LED 13 est :</h3>
+		<button id="toggle13" class="on btn btn-danger btn-lg">VÉRROUILLÉE
+		</button>
+		</div>
+		<br>
+		<div class="panel-footer"><h3>La LED 12 est :</h3> 
+		<button id="toggle12" class="on btn btn-danger btn-lg">VÉRROUILLÉE
+		</button>
+		</div>
+		<br>
+		<div class="panel-footer"><h3>La LED 11 est :</h3>
+		<button id="toggle11" class="on btn btn-danger btn-lg">VÉRROUILLÉE
+		</button>
+		</div>
+		<br>
+		<div class="panel-footer"><h3>La LED 10 est :</h3>
+		<button id="toggle10" class="on btn btn-danger btn-lg">VÉRROUILLÉE
+		</button>
+		</div>
+<!--<div class="panel-footer"><p>LED 13</p> 
+<button class="btn btn-success btn-lg" onclick="httpGet('http://localhost:8080/?serverfunction=ledSwitch13&value=1')" >On</button>
+<button class="btn btn-danger btn-lg" onclick="httpGet('http://localhost:8080/?serverfunction=ledSwitch13&value=0')" >Off</button>
+</div>
+BACKUP DE LA FONCTION BUTTON SIMPLE
+		<div class="panel-footer"><p>LED 12</p>
+		<button class="btn btn-success btn-lg" onclick="httpGet('http://localhost:8080/?serverfunction=ledSwitch12&value=1')" >On</button>
+		<button class="btn btn-danger btn-lg" onclick="httpGet('http://localhost:8080/?serverfunction=ledSwitch12&value=0')" >Off</button>
+		</div>
+		<div class="panel-footer"><p>LED 11</p>
+		<button class="btn btn-success btn-lg" onclick="httpGet('http://localhost:8080/?serverfunction=ledSwitch11&value=1')" >On</button>
+		<button class="btn btn-danger btn-lg" onclick="httpGet('http://localhost:8080/?serverfunction=ledSwitch11&value=0')" >Off</button>
+		</div>-->
+	</div>
+
+	<script src="js/leds_toggle.js"></script>
+	</body>
+
+</html>
