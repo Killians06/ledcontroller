@@ -86,6 +86,28 @@ this.digitalWrite( 10, 0 );
 		},
 		POST : {}
 	};
+
+	var SocketFunctions = {
+
+    loopBack : function( data ){
+
+        if( data.messageData.message ){
+
+            narfHttp.connected_clients.forEach( function( connection ){
+
+                connection.send( JSON.stringify( { message : data.messageData.message } ) );
+            });
+
+        }else{
+            connection.send( JSON.stringify( { message : '' } ) );
+        }
+    }
+	};
+	function socketConnectionHandler ( req ){
+
+    	return true;
+	}
+
  
 //Serveur HTTP pour la récéptiondes fonctions GET
 	var hs = new narf.HttpServer( { port : 8080 } ).start();
@@ -95,14 +117,22 @@ this.digitalWrite( 10, 0 );
 		hs.addAPI( { functions : APIFunctions } );
 		console.log( 'Serveur initalisé sur http://localhost:' + port );
 		console.log( 'Accueil de la WebApp sur http://localhost:8078' );
+		hs.addWebSocket( {
+        	functions : SocketFunctions,
+        	request : socketConnectionHandler,
+        	asc : false,
+        	protocol : 'echo-protocol'
+    	} );
 	} );
+
+
 	
 
  
 });
 
 //Debug dans la Console
-narf.setDebug( false );
+narf.setDebug( true );
 
 //Définition du port d'affichage de la WebApp
 narf.pageServer( {
