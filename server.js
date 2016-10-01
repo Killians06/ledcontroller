@@ -1,7 +1,28 @@
 var five = require( 'johnny-five' ),
     board,
     narf = require( 'narf' );
+
+const express = require('express'),
+      app     = express(),
+      server  = require('http').createServer(app).listen(8081),
+      io      = require('socket.io')(server),
+      path    = require('path');
  
+// Dossier static
+app.use('/styles', express.static('styles'));
+app.use('/js', express.static('js'));
+ 
+// Routes
+app.get('/', function(req, res) {
+   res.sendFile(path.join(__dirname + '/index.html'));
+});
+ 
+
+io.sockets.on('connection', function (socket) {
+	console.log("Client connecté au Socket")
+    socket.emit('ConfirmAlert');
+});
+
 board = new five.Board();
  
 /*
@@ -87,26 +108,26 @@ this.digitalWrite( 10, 0 );
 		POST : {}
 	};
 
-	var SocketFunctions = {
-
-    loopBack : function( data ){
-
-        if( data.messageData.message ){
-
-            narfHttp.connected_clients.forEach( function( connection ){
-
-                connection.send( JSON.stringify( { message : data.messageData.message } ) );
-            });
-
-        }else{
-            connection.send( JSON.stringify( { message : '' } ) );
-        }
-    }
-	};
-	function socketConnectionHandler ( req ){
-
-    	return true;
-	}
+//	var SocketFunctions = {
+//
+//    loopBack : function( data ){
+//
+//        if( data.messageData.message ){
+//
+//            narfHttp.connected_clients.forEach( function( connection ){
+//
+//                connection.send( JSON.stringify( { message : data.messageData.message } ) );
+//            });
+//
+//        }else{
+//            connection.send( JSON.stringify( { message : '' } ) );
+//        }
+//    }
+//	};
+//	function socketConnectionHandler ( req ){
+//
+//    	return true;
+//	}
 
  
 //Serveur HTTP pour la récéptiondes fonctions GET
@@ -116,14 +137,14 @@ this.digitalWrite( 10, 0 );
 	
 		hs.addAPI( { functions : APIFunctions } );
 		console.log( 'Serveur initalisé sur http://localhost:' + port );
-		console.log( 'Accueil de la WebApp sur http://localhost:8078' );
-		hs.addWebSocket( {
-        	functions : SocketFunctions,
-        	request : socketConnectionHandler,
-        	asc : false,
-        	protocol : 'echo-protocol'
-    	} );
-	} );
+		console.log( 'Accueil de la WebApp sur http://localhost:8081');
+//		hs.addWebSocket( {
+//        	functions : SocketFunctions,
+//        	request : socketConnectionHandler,
+//        	asc : false,
+//        	protocol : 'echo-protocol'
+//    	} );
+	});
 
 
 	
@@ -134,9 +155,9 @@ this.digitalWrite( 10, 0 );
 //Debug dans la Console
 narf.setDebug( true );
 
-//Définition du port d'affichage de la WebApp
-narf.pageServer( {
-
-    port : 8079,
-    path :  __dirname + '/'
-});
+////Définition du port d'affichage de la WebApp
+//narf.pageServer( {
+//
+//    port : 8079,
+//    path :  __dirname + '/'
+//});//

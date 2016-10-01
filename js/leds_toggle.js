@@ -2,6 +2,7 @@
 	document.getElementById("toggle13").addEventListener("click", function() {
 	//console.log(stateLED13 + ' a instant du click' );
 
+
 		if(stateLED13 === false) { // Si la LED est ON // -> Passer la led en mode OFF avec l'appel de fonction
 			document.getElementById("toggle13").innerText = "DÉVERROUILLÉE"; // Changer le texte
 			document.getElementById("toggle13").className = "on btn btn-success btn-lg"; // Changer la couleur en modifiant la classe
